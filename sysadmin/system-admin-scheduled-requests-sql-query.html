@@ -64,7 +64,7 @@
 				<p><code>¿&lt;¿?¿x¿m¿l¿ ¿v¿e¿r¿s¿i¿o¿n¿ ¿=¿ ¿&#39;¿1¿.¿0¿&#39;¿ ¿e¿n¿c¿o¿d¿i¿n¿g¿ ¿=¿ ¿&#39;¿U¿T¿F¿-¿8¿&#39;¿?¿&gt;¿ ¿&lt;¿s¿c¿h¿e¿d¿u¿l¿e¿ ¿x¿m¿l¿n¿s¿:¿x¿s¿i¿=¿&quot;¿h¿t¿t¿p¿:¿/¿/¿w¿w¿w¿.¿w¿3¿.¿o¿r¿g¿/¿2¿0¿0¿1¿/¿X¿M¿L¿S¿c¿h¿e¿m¿a¿-¿i¿n¿s¿t¿a¿n¿c¿e¿&quot;¿ ¿n¿a¿m¿e¿=¿&quot;¿j¿o¿b¿4¿H¿o¿u¿r¿l¿y¿_¿s¿c¿h¿e¿d¿u¿l¿e¿&quot;¿ ¿x¿m¿l¿n¿s¿=¿&quot;¿h¿t¿t¿p¿:¿/¿/¿x¿m¿l¿n¿s¿.¿o¿r¿a¿c¿l¿e¿.¿c¿o¿m¿/¿s¿c¿h¿e¿d¿u¿l¿e¿r¿&quot;¿&gt;¿&lt;¿d¿e¿s¿c¿r¿i¿p¿t¿i¿o¿n¿&gt;¿S¿c¿h¿e¿d¿u¿l¿e¿ ¿f¿o¿r¿ ¿j¿o¿b¿4¿H¿o¿u¿r¿l¿y¿&lt;¿/¿d¿e¿s¿c¿r¿i¿p¿t¿i¿o¿n¿&gt;¿&lt;¿d¿i¿s¿p¿l¿a¿y¿-¿n¿a¿m¿e¿&gt;¿j¿o¿b¿4¿H¿o¿u¿r¿l¿y¿_¿s¿c¿h¿e¿d¿u¿l¿e¿&lt;¿/¿d¿i¿s¿p¿l¿a¿y¿-¿n¿a¿m¿e¿&gt;¿&lt;¿r¿e¿c¿u¿r¿r¿e¿n¿c¿e¿&gt;¿&lt;¿c¿o¿u¿n¿t¿&gt;¿0¿&lt;¿/¿c¿o¿u¿n¿t¿&gt;¿&lt;¿i¿c¿a¿l¿-¿e¿x¿p¿r¿e¿s¿s¿i¿o¿n¿&gt;¿F¿R¿E¿Q¿=¿H¿O¿U¿R¿L¿Y¿;¿B¿Y¿M¿I¿N¿U¿T¿E¿=¿3¿0¿;¿I¿N¿T¿E¿R¿V¿A¿L¿=¿1¿;¿&lt;¿/¿i¿c¿a¿l¿-¿e¿x¿p¿r¿e¿s¿s¿i¿o¿n¿&gt;¿&lt;¿/¿r¿e¿c¿u¿r¿r¿e¿n¿c¿e¿&gt;¿&lt;¿/¿s¿c¿h¿e¿d¿u¿l¿e¿&gt;</code></p>
 				<p>This will make the data more usable:</p>
 				<pre><code class="language-sql">replace(replace(replace(utl_raw.cast_to_varchar2(rh.adhocschedule),chr(0),&#39;&#39;),chr(10),&#39;&#39;),chr(13),&#39;&#39;) adhocschedule_cast</code></pre>
-				<p>Result:</p>
+				<p>Result (with line breaks added for readability):</p>
 				<pre><code class="language-xml">&lt;?xml version = '1.0' encoding = 'UTF-8'?&gt;
 &lt;schedule
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="job4Hourly_schedule"
