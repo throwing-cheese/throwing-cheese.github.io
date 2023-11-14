@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Extract Data about Oracle Fusion Scheduled Requests / Sysadmin / Throwing Cheese</title>
+		<title>Query to Extract Data about Oracle Fusion Scheduled Requests / Sysadmin / Throwing Cheese</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.1/css/bootstrap.min.css" integrity="sha512-siwe/oXMhSjGCwLn+scraPOWrJxHlUgMBMZXdPe2Tnk3I0x3ESCoLz7WZ5NTH6SZrywMY+PB1cjyqJ5jAluCOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto&display=swap" media="all" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -38,32 +38,33 @@
 		</header>
 		<main>
 			<div class="container">
-				<h1 id="extract-data-about-oracle-fusion-scheduled-requests">Extract Data about Oracle Fusion Scheduled Requests</h1>
+				<h1 id="extract-data-about-oracle-fusion-scheduled-requests">Query to Extract Data about Oracle Fusion Scheduled Requests</h1>
 				<nav aria-label="breadcrumb">
 				  <ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="https://throwing-cheese.github.io/">Home</a></li>
 					<li class="breadcrumb-item"><a href="https://throwing-cheese.github.io/sysadmin">Sysadmin</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Extract Data about Oracle Fusion Scheduled Requests</li>
+					<li class="breadcrumb-item active" aria-current="page">Query to Extract Data about Oracle Fusion Scheduled Requests</li>
 				  </ol>
 				</nav>
-<ul>
-<li><a href="#extract-data-about-oracle-fusion-scheduled-requests">Extract Data about Oracle Fusion Scheduled Requests</a><ul>
-<li><a href="#release-12-scheduled-request-sql">Release 12 Scheduled Request SQL</a></li>
-<li><a href="#oracle-fusion-scheduled-request-column">Oracle Fusion Scheduled Request Column</a><ul>
-<li><a href="#the--adhocschedule--column">The &#39;adhocschedule&#39; Column</a><ul>
-<li><a href="#utl-rawcast-to-varchar2">utl_raw.cast_to_varchar2</a><ul>
-<li><a href="#extracting-xml-from--adhocschedule-">Extracting XML from &#39;adhocschedule&#39;</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#oracle-fusion-scheduled-requests-sql">Oracle Fusion Scheduled Requests SQL</a></li>
-<li><a href="#note-about-the--ical-expression--tag">Note about the &#39;ical-expression&#39; tag</a></li>
-</ul>
-</li>
-</ul>
+				<p><span class="badge bg-danger">2023-11-14</span></p>
+				<ul>
+				<li><a href="#extract-data-about-oracle-fusion-scheduled-requests">Extract Data about Oracle Fusion Scheduled Requests</a><ul>
+				<li><a href="#release-12-scheduled-request-sql">Release 12 Scheduled Request SQL</a></li>
+				<li><a href="#oracle-fusion-scheduled-request-column">Oracle Fusion Scheduled Request Column</a><ul>
+				<li><a href="#the--adhocschedule--column">The &#39;adhocschedule&#39; Column</a><ul>
+				<li><a href="#utl-rawcast-to-varchar2">utl_raw.cast_to_varchar2</a><ul>
+				<li><a href="#extracting-xml-from--adhocschedule-">Extracting XML from &#39;adhocschedule&#39;</a></li>
+				</ul>
+				</li>
+				</ul>
+				</li>
+				</ul>
+				</li>
+				<li><a href="#oracle-fusion-scheduled-requests-sql">Oracle Fusion Scheduled Requests SQL</a></li>
+				<li><a href="#note-about-the--ical-expression--tag">Note about the &#39;ical-expression&#39; tag</a></li>
+				</ul>
+				</li>
+				</ul>
 
 				<h2 id="release-12-scheduled-request-sql">Release 12 Scheduled Request SQL</h2>
 				<p>In the old Release 12 world it was possible to extract the schedule information about a scheduled requests, such as how often it runs, on which days of the week, on which hour etc. etc.</p>
