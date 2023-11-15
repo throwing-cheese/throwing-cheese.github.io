@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Query to Extract Data about Oracle Fusion Scheduled Requests / Sysadmin / Throwing Cheese</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.1/css/bootstrap.min.css" integrity="sha512-siwe/oXMhSjGCwLn+scraPOWrJxHlUgMBMZXdPe2Tnk3I0x3ESCoLz7WZ5NTH6SZrywMY+PB1cjyqJ5jAluCOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto&display=swap" media="all" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css" integrity="sha512-RLF8eOxhuwsRINc7r56dpl9a3VStqrXD+udWahutJrYdyh++2Ghnf+s4jFsOyryKZt/GNjPwbXVPH3MJpKrn2g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-D5B2WKZNYQ"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-D5B2WKZNYQ');
+		</script>
+		<style>
+			body { font-family: 'Roboto', sans-serif; }
+			h1, h2 { font-family: 'Anton', sans-serif; }
+		</style>
+	</head>
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin-bottom:20px;">
+				<div class="container-fluid">
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<a class="navbar-brand" href="https://throwing-cheese.github.io/">🧀 Throwing Cheese</a>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<div class="container">
+				<h1 id="extract-data-about-oracle-fusion-scheduled-requests">Query to Extract Data about Oracle Fusion Scheduled Requests</h1>
+				<nav aria-label="breadcrumb">
+				  <ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="https://throwing-cheese.github.io/">Home</a></li>
+					<li class="breadcrumb-item"><a href="https://throwing-cheese.github.io/sysadmin">Sysadmin</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Query to Extract Data about Oracle Fusion Scheduled Requests</li>
+				  </ol>
+				</nav>
+				<p><span class="badge bg-danger">14-NOV-2023</span></p>
+				<ul>
+				<li><a href="#extract-data-about-oracle-fusion-scheduled-requests">Extract Data about Oracle Fusion Scheduled Requests</a><ul>
+				<li><a href="#release-12-scheduled-request-sql">Release 12 Scheduled Request SQL</a></li>
+				<li><a href="#oracle-fusion-scheduled-request-column">Oracle Fusion Scheduled Request Column</a><ul>
+				<li><a href="#the--adhocschedule--column">The &#39;adhocschedule&#39; Column</a><ul>
+				<li><a href="#utl-rawcast-to-varchar2">utl_raw.cast_to_varchar2</a><ul>
+				<li><a href="#extracting-xml-from--adhocschedule-">Extracting XML from &#39;adhocschedule&#39;</a></li>
+				</ul>
+				</li>
+				</ul>
+				</li>
+				</ul>
+				</li>
+				<li><a href="#oracle-fusion-scheduled-requests-sql">Oracle Fusion Scheduled Requests SQL</a></li>
+				<li><a href="#note-about-the--ical-expression--tag">Note about the &#39;ical-expression&#39; tag</a></li>
+				</ul>
+				</li>
+				</ul>
+
+				<h2 id="release-12-scheduled-request-sql">Release 12 Scheduled Request SQL</h2>
+				<p>In the old Release 12 world it was possible to extract the schedule information about a scheduled requests, such as how often it runs, on which days of the week, on which hour etc. etc.</p>
+				<p>You can see more details about how that was done via this SQL query:</p>
+				<p><a href="https://github.com/throwing-cheese/oracle-e-business-suite-sql-scripts/blob/main/sa/sa-concurrent-requests-scheduled.sql">oracle-e-business-suite-sql-scripts &gt; sa &gt; sa-concurrent-requests-scheduled.sql</a></p>
+				<h2 id="oracle-fusion-scheduled-request-column">Oracle Fusion Scheduled Request Column</h2>
+				<p>However, extracting that type of information from Oracle Fusion was something I&#39;d not found out how to do until recently.</p>
+				<p>In one of my jobs someone circulated a zip file containing some useful SQL queries which could be used to extract various bits of info about concurrent requests in Fusion.</p>
+				<p>The main fusion <code>request_history</code> table contains all sorts of useful information about a concurrent request in Oracle Fusion.</p>
+				<h3 id="the-adhocschedule-column">The &#39;adhocschedule&#39; Column</h3>
+				<p>There&#39;s a column in the <code>request_history</code> table called <code>adhocschedule</code>, however, you can&#39;t just include it in your query in the format in which it&#39;s stored in the database.</p>
+				<h4 id="utl_rawcast_to_varchar2">utl_raw.cast_to_varchar2</h4>
+				<p>Instead, you have to do use <code>utl_raw.cast_to_varchar2(adhocschedule)</code></p>
+				<p>Read more info about <a href="https://docs.oracle.com/database/timesten-18.1/TTPLP/u_raw.htm#TTPLP71506">utl_raw.cast_to_varchar2</a></p>
+				<h5 id="extracting-xml-from-adhocschedule">Extracting XML from &#39;adhocschedule&#39;</h5>
+				<p>Once you have done that. you still end up with something hard to use - e.g.</p>
+				<p><code>¿&lt;¿?¿x¿m¿l¿ ¿v¿e¿r¿s¿i¿o¿n¿ ¿=¿ ¿&#39;¿1¿.¿0¿&#39;¿ ¿e¿n¿c¿o¿d¿i¿n¿g¿ ¿=¿ ¿&#39;¿U¿T¿F¿-¿8¿&#39;¿?¿&gt;¿ ¿&lt;¿s¿c¿h¿e¿d¿u¿l¿e¿ ¿x¿m¿l¿n¿s¿:¿x¿s¿i¿=¿&quot;¿h¿t¿t¿p¿:¿/¿/¿w¿w¿w¿.¿w¿3¿.¿o¿r¿g¿/¿2¿0¿0¿1¿/¿X¿M¿L¿S¿c¿h¿e¿m¿a¿-¿i¿n¿s¿t¿a¿n¿c¿e¿&quot;¿ ¿n¿a¿m¿e¿=¿&quot;¿j¿o¿b¿4¿H¿o¿u¿r¿l¿y¿_¿s¿c¿h¿e¿d¿u¿l¿e¿&quot;¿ ¿x¿m¿l¿n¿s¿=¿&quot;¿h¿t¿t¿p¿:¿/¿/¿x¿m¿l¿n¿s¿.¿o¿r¿a¿c¿l¿e¿.¿c¿o¿m¿/¿s¿c¿h¿e¿d¿u¿l¿e¿r¿&quot;¿&gt;¿&lt;¿d¿e¿s¿c¿r¿i¿p¿t¿i¿o¿n¿&gt;¿S¿c¿h¿e¿d¿u¿l¿e¿ ¿f¿o¿r¿ ¿j¿o¿b¿4¿H¿o¿u¿r¿l¿y¿&lt;¿/¿d¿e¿s¿c¿r¿i¿p¿t¿i¿o¿n¿&gt;¿&lt;¿d¿i¿s¿p¿l¿a¿y¿-¿n¿a¿m¿e¿&gt;¿j¿o¿b¿4¿H¿o¿u¿r¿l¿y¿_¿s¿c¿h¿e¿d¿u¿l¿e¿&lt;¿/¿d¿i¿s¿p¿l¿a¿y¿-¿n¿a¿m¿e¿&gt;¿&lt;¿r¿e¿c¿u¿r¿r¿e¿n¿c¿e¿&gt;¿&lt;¿c¿o¿u¿n¿t¿&gt;¿0¿&lt;¿/¿c¿o¿u¿n¿t¿&gt;¿&lt;¿i¿c¿a¿l¿-¿e¿x¿p¿r¿e¿s¿s¿i¿o¿n¿&gt;¿F¿R¿E¿Q¿=¿H¿O¿U¿R¿L¿Y¿;¿B¿Y¿M¿I¿N¿U¿T¿E¿=¿3¿0¿;¿I¿N¿T¿E¿R¿V¿A¿L¿=¿1¿;¿&lt;¿/¿i¿c¿a¿l¿-¿e¿x¿p¿r¿e¿s¿s¿i¿o¿n¿&gt;¿&lt;¿/¿r¿e¿c¿u¿r¿r¿e¿n¿c¿e¿&gt;¿&lt;¿/¿s¿c¿h¿e¿d¿u¿l¿e¿&gt;</code></p>
+				<p>This will make the data more usable:</p>
+				<pre><code class="language-sql">replace(replace(replace(utl_raw.cast_to_varchar2(rh.adhocschedule),chr(0),&#39;&#39;),chr(10),&#39;&#39;),chr(13),&#39;&#39;) adhocschedule_cast</code></pre>
+				<p>Result (with line breaks added for readability):</p>
+				<pre><code class="language-xml">&lt;?xml version = '1.0' encoding = 'UTF-8'?&gt;
+&lt;schedule
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="job4Hourly_schedule"
+	xmlns="http://xmlns.oracle.com/scheduler"&gt;
+	&lt;description&gt;Schedule for job4Hourly&lt;/description&gt;
+	&lt;display-name&gt;job4Hourly_schedule&lt;/display-name&gt;
+	&lt;recurrence&gt;
+		&lt;count&gt;0&lt;/count&gt;
+		&lt;ical-expression&gt;FREQ=HOURLY;BYMINUTE=30;INTERVAL=1;&lt;/ical-expression&gt;
+	&lt;/recurrence&gt;
+&lt;/schedule&gt;</code></pre>
+				<p>From there, by chopping up the data, you can then extract useful information about the scheduled job, as the info is held in various XML tags.</p>
+				<h2 id="oracle-fusion-scheduled-requests-sql">Oracle Fusion Scheduled Requests SQL</h2>
+				<p>See the <strong>REQUEST HISTORY - SCHEDULED</strong> heading in this SQL file:</p>
+				<p><a href="https://github.com/throwing-cheese/oracle-fusion-cloud-sql-scripts/blob/main/sa/sa-requests-history.sql">oracle-fusion-cloud-sql-scripts/sa/sa-requests-history.sql</a></p>
+				<h2 id="note-about-the-ical-expression-tag">Note about the &#39;ical-expression&#39; tag</h2>
+				<p>The above query contains this line:</p>
+				<pre><code class="language-sql">and instr(replace(utl_raw.cast_to_varchar2(adhocschedule),chr(0),&#39;&#39;),&#39;&lt;ical-expression&gt;&#39;) = 0</code></pre>
+				<p>Where the adhocschedule contains the <code>&lt;ical-expression&gt;</code> XML tag, it is usually the case that the job was run by a user account ending in &quot;APPID&quot; e.g. FUSION_APPS_HCM_ESS_APPID.</p>
+				<p>As per this Cloud Customer Connect post
+				<a href="https://community.oracle.com/customerconnect/discussion/comment/888413#Comment_888413">https://community.oracle.com/customerconnect/discussion/comment/888413#Comment_888413</a></p>
+				<p>Quoting an Oracle employee:</p>
+				<ul>
+				<li>%APPID - These are internal application users, their purpose is to authorize an application to exchange/access another application. </li>
+				<li>These users do not actually have functional access to your data (eg you cannot login with any of these users to access business flows).</li>
+				<li>The user is an internal account for Fusion Applications functionality.</li>
+				<li>These accounts are not visible in Security Console.</li>
+				<li>These accounts are owned by Oracle software.</li>
+				<li>Most those users are used by program, no human know their password.</li>
+				</ul>
+				<p>Someone on the post noted that the <code>created_by</code> column in the <code>per_users</code> table for usernames ending in APPID sometimes contained the usernames of non system accounts. More feedback from another Oracle employee:</p>
+				<ul>
+				<li>The create_by user in the table is the user who brought the data from ldap server into per_users table</li>
+				<li>not the user who create the APPID user in ldap server.</li>
+				<li>the create_by user in ldap server will be an system user, but cloud customer does not have access to ldap server</li>
+				<li>for example, the user who run retrieve latest ldap changes process, will bring data into per_users table, and that user can be the create_by user in the table</li>
+				</ul>
+				<p>Other <code>&lt;ical-expression&gt;</code> jobs are sometimes submitted by the &quot;FAAdmin&quot; user, such as:</p>
+				<ul>
+				<li>FndExtMgrDigestPurgeJob - Job for purging Extension Manager old Digests</li>
+				<li>FndIDCSSyncNotifyServiceJob - Job for FA IDCS Users Sync</li>
+				<li>FndOSCSBulkIngestJob - Job for processing errored rows to Oracle Search Cloud Service</li>
+				<li>FndOSCSAvailabilityJob - Job to check Search Cloud Service availability</li>
+				<li>FndOSCSAttachmentIngestJob - Job for ingesting attachments to Oracle Search Cloud Service</li>
+				<li>BPMSMCAttachmentUploadServiceJob - Job to Upload Attachments of BPM Archive Tasks.</li>
+				<li>BPMSMCTranslationServiceJob - Job to Process Translation of BPM Archive Tasks.</li>
+				<li>BPMSMCDataExtractServiceJob - Job to Extract Workflow Tasks for Archive.</li>
+				</ul>
+				<p>Also, some jobs are submitted by &quot;regular&quot; non system users where the <code>&lt;ical-expression&gt;</code> XML tag is populated in the adhocschedule column. The main job seems to be the &quot;EssBipJob&quot; under the &quot;BI Publisher&quot; Product name, so these are scheduled BI Publisher jobs.</p>
+				<p>Therefore, to exclude <code>&lt;ical-expression&gt;</code> jobs, this line is included</p>
+				<pre><code class="language-sql">and instr(replace(utl_raw.cast_to_varchar2(adhocschedule),chr(0),&#39;&#39;),&#39;&lt;ical-expression&gt;&#39;) = 0</code></pre>
+
+			</div>
+		</main>
+		<footer>
+		</footer>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.1/js/bootstrap.min.js" integrity="sha512-vyRAVI0IEm6LI/fVSv/Wq/d0KUfrg3hJq2Qz5FlfER69sf3ZHlOrsLriNm49FxnpUGmhx+TaJKwJ+ByTLKT+Yg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js" integrity="sha512-64D4TOespcFsS6vnnca/aON48/6XNG61BAtQj7WG+8qAZXclMfx92cXC7l56/FuHLNY9FeDvLPqVuT3x4AptgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/languages/xml.min.js" integrity="sha512-VtPLHERBValZ6PoC3+sFdA0sKua4dletDlw1z2DGMAZ5kVwnYY0tMg+BgpJXq7wSb30dA2GhM6kd3zDHzIA0hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script>hljs.highlightAll();</script>
+	</body>
+</html>
