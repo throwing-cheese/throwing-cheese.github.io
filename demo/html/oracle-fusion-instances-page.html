@@ -93,6 +93,10 @@
 			<li><a class="dropdown-item" href="https://support.oracle.com/rs?type=doc&id=1597086.1">Known Issues - Financials</a></li>
 			<li><a class="dropdown-item" href="https://support.oracle.com/rs?type=doc&id=1554124.1">Known Issues - Procurement</a></li>
 			<li><a class="dropdown-item" href="https://support.oracle.com/rs?type=doc&id=1545504.1">Known Issues - Projects</a></li>
+			<li><hr class="dropdown-divider"></li>
+			<li><a class="dropdown-item" href="https://www.oracle.com/readiness/">Oracle Cloud Readiness</a></li>
+			<li><a class="dropdown-item" href="https://blogs.oracle.com/erp-ace/post/harness-the-business-value-of-quarterly-updates">Blog Post about Quarterly Updates</a></li>
+			<li><a class="dropdown-item" href="https://www.oracle.com/webfolder/technetwork/tutorials/tutorial/cloud/cloud-apps-feature-listing.xlsx">Cloud Feature Listing Spreadsheet (updated weekly)</a></li>
           </ul>
         </li>
       </ul>
@@ -105,7 +109,7 @@
 		
 		<hr>
 		
-		<small><a href="#anchor_customer_links">Customer Links</a> / <a href="#anchor_oracle_support">Oracle Support Shortcuts</a></small>
+		<small><a href="#anchor_customer_links">Customer Links</a> / <a href="#anchor_cohorts">Release Cohorts</a> / <a href="#anchor_oracle_support">Oracle Support Shortcuts</a></small>
 		
 		<hr>
 		
@@ -128,6 +132,69 @@
 			<tbody id="customer_links_rows">
 			</tbody>
 		</table>
+
+		<hr />
+		
+		<div class="page-header">
+			<h4 id="anchor_cohorts">Release Cohorts [<a href="#top">top</a>]</h4>
+		</div>
+		
+		<p>Every quarter, Oracle updates an organisation's environments with fixes and new features. Changes may include customer enhancements, legislative changes and updates to the underlying technology stack.</p>
+		
+		<p>An organisation's cohort determines when the quarterly update is applied to their pods:</p>
+		
+		<ul>
+			<li>Cohort A: February-May-August-November</li>
+			<li>Cohort B: March-June-September-December</li>
+			<li>Cohort C: April-July-October-January</li>
+		</ul>
+		
+		<p>Stage pods are updated on the first Friday of an organisation's quarterly update month. Production pods are updated two weeks later on the third Friday of the month.</p>
+		
+		<p>Quarterly update names combine the year and A, B, C or D. For example, the release for the first quarter of 2023 is 23A; the release for the second quarter of 2023 is 23B; and the release for the first quarter of 2024 will be 24A.</p>
+		
+		<p>Quarterly updates cannot be delayed or skipped. This ensures that all customers use the most up-to-date and certified versions of the applications.</p>
+
+		<table id="waves" style="width:200px;" class="table table-striped-columns table-sm table-hover">
+			<thead>
+				<tr>
+					<th></th>
+					<th colspan="4" style="text-align:center;">RELEASE</th>
+				</tr>
+				<tr>
+					<th>Cohort</th>
+					<th>A</th>
+					<th>B</th>
+					<th>C</th>
+					<th>D</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="table-primary">
+					<td>A</td>
+					<td>Feb</td>
+					<td>May</td>
+					<td>Aug</td>
+					<td>Nov</td>
+				</tr>
+				<tr class="table-secondary">
+					<td>B</td>
+					<td>Mar</td>
+					<td>Jun</td>
+					<td>Sep</td>
+					<td>Dec</td>
+				</tr>
+				<tr class="table-success">
+					<td>C</td>
+					<td>Apr</td>
+					<td>Jul</td>
+					<td>Oct</td>
+					<td>Jan</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
 
 		<hr />
 		
@@ -218,7 +285,7 @@
 				"name": "Department of Carrots",
 				"initials": "DOC",
 				"url": "https://example.com/DepartmentofCarrots/",
-				"wave": "3",
+				"wave": "C",
 				"instances": [
 					{ "url": "bird.aa.bb2", "label":"PROD"},
 					{ "url": "bird-dev1.aa.bb2", "label":"DEV1"},
@@ -235,7 +302,7 @@
 				"name": "Gotham City Council",
 				"initials": "GCC",
 				"url": "https://example.com/FCM/",
-				"wave": "1",
+				"wave": "A",
 				"instances": [
 					{ "url": "song.fa.em3", "label":"PROD"},
 					{ "url": "song-test.fa.em3", "label":"TEST", "cloned":"2023-01-17" },
@@ -245,12 +312,12 @@
 				]}, {
 				"name": "Incredibly Edible Bricks",
 				"initials": "IEB",
-				"wave": "3"
+				"wave": "C"
 				}, {
 				"name": "Gotham City Hospital",
 				"initials": "GCH",
 				"url": "https://example.com/GCH/Shared%20Documents/Managed%20Services",
-				"wave": "2",
+				"wave": "B",
 				"instances": [
 					{ "url": "fa-ping-saasfaprod1.fa.ocs", "label":"PROD"},
 					{ "url": "fa-ping-dev1-saasfaprod1.fa.ocs", "label":"DEV", "cloned":"2022-11-16" },
@@ -264,7 +331,7 @@
 				"name": "Cheesy Crate Express",
 				"initials": "CCE",
 				"url": "https://example.com/CCE/",
-				"wave": "1",
+				"wave": "A",
 				"instances": [
 					{ "url": "fa-pong-saasfaprod1.fa.ocs", "label":"PROD"},
 					{ "url": "fa-pong-dev1-saasfaprod1.fa.ocs", "label":"DEV", "cloned":"2022-06-10" },
@@ -273,7 +340,7 @@
 				"name": "Fromage Fresh Corp",
 				"initials": "FFC",
 				"url": "https://example.com/FFC/",
-				"wave": "1",
+				"wave": "A",
 				"instances": [
 					{ "url": "hoop.fa.em3", "label":"PROD"},
 					{ "url": "hoop-dev2.fa.em3", "label":"DEV2"},
@@ -282,8 +349,7 @@
 				]}, {
 				"name": "Ricotta Ridge Express",
 				"initials": "RRE",
-				"url": "https://example.com/RRE/",
-				"wave": "3",
+				"wave": "C",
 				"instances": [
 					{ "url": "flat.fa.em1.zzz", "label":"PROD", "css":"PROD"},
 					{ "url": "flat-dev1.fa.em1.zzz", "label":"DEV"},
@@ -292,7 +358,7 @@
 				"name": "Stinky Cheese Association",
 				"initials": "PAR",
 				"url": "https://example.com/PAR/",
-				"wave": "3",
+				"wave": "C",
 				"instances": [
 					{ "url": "fa-golf-saasfaprod1.fa.ocs", "label":"PROD"},
 					{ "url": "fa-golf-dev1-saasfaprod1.fa.ocs", "label":"DEV1"},
@@ -301,7 +367,7 @@
 				"name": "Smelly Socks Champions",
 				"initials": "SSC",
 				"url": "https://example.com/SSC/",
-				"wave": "3",
+				"wave": "C",
 				"instances": [
 					{ "url": "flit.fa.em1.zzz", "label":"PROD"},
 					{ "url": "flit-test.fa.em1.zzz", "label":"TEST"}
@@ -309,7 +375,7 @@
 				"name": "Pungent Cheddar Association",
 				"initials": "PCA",
 				"url": "https://example.com/PCA/",
-				"wave": "1",
+				"wave": "A",
 				"instances": [
 					{ "url": "flot.fa.em3", "label":"PROD"},
 					{ "url": "flot-dev2.fa.em3", "label":"DEV"},
@@ -319,7 +385,7 @@
 				"name": "Metropolis City Council",
 				"initials": "MCC",
 				"url": "https://example.com/MCC/",
-				"wave": "1",
+				"wave": "A",
 				"instances": [
 					{ "url": "able.fa.em3", "label":"PROD"},
 					{ "url": "able-dev1.fa.em3", "label":"DEV1"},
@@ -512,14 +578,6 @@
 					search: '<i class="fa fa-filter" aria-hidden="true"></i>  ',
 					searchPlaceholder: 'filter customers'
 				}
-			});
-			$('#waves').DataTable( {
-				paging: false,
-				"order": [[0, 'asc']],
-				responsive: true,
-				"scrollX": false,
-				"autoWidth": false,
-				"bFilter": false
 			});
 		});
 	
